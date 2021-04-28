@@ -12,6 +12,15 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
 jobs:
+  job_fail:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: return 1
+      - run:
+         name: Upload Failed Tests
+         command: "it has failed"
+         when: on_fail
   my_job:
     docker:
       - image: circleci/node:13.8.0
@@ -68,3 +77,4 @@ workflows:
           requires:
             - save_hello_world_output
       - my_job
+      - job_fail
